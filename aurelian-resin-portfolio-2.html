@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurelian Resin Artistry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Manrope:wght@200..800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'bg': '#101415',
+        'bg-dim': '#0b0f10',
+        'surface': '#1d2022',
+        'surface-high': '#272a2c',
+        'surface-highest': '#323537',
+        'on-surface': '#e0e3e5',
+        'on-surface-dim': '#c6c6cd',
+        'outline': '#45464d',
+        'primary': '#bec6e0',
+        'secondary': '#e9c349',
+        'tertiary': '#2ddbde',
+      },
+      fontFamily: {
+        'bodoni': ['Bodoni Moda', 'serif'],
+        'manrope': ['Manrope', 'sans-serif'],
+      }
+    }
+  }
+}
+</script>
+<style>
+  :root {
+    --gold: #e9c349;
+    --teal: #2ddbde;
+    --bg: #101415;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--bg);
+    color: #e0e3e5;
+    font-family: 'Manrope', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* PAGE VISIBILITY */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* NAVBAR */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 20px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(16,20,21,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .nav-logo {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: 0.22em; color: #bec6e0;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 40px; align-items: center; }
+  .nav-links a {
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px; font-weight: 500;
+    letter-spacing: 0.08em; color: #c6c6cd;
+    text-decoration: none; transition: color 0.3s;
+    cursor: pointer;
+  }
+  .nav-links a:hover, .nav-links a.active-link { color: #e0e3e5; }
+  .btn-gold {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid var(--gold);
+    padding: 10px 24px; background: transparent;
+    cursor: pointer; transition: all 0.3s; text-decoration: none;
+    display: inline-block;
+  }
+  .btn-gold:hover { background: rgba(233,195,73,0.1); }
+
+  /* HERO */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden; padding-top: 80px;
+  }
+  /* Bismillah SVG background */
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+  }
+  .bismillah-bg {
+    position: absolute; inset: 0; z-index: 1;
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+  }
+  .bismillah-bg svg {
+    width: 80%; max-width: 900px; opacity: 0.04;
+    fill: #e9c349;
+    filter: blur(1px);
+  }
+  .hero-overlay {
+    position: absolute; inset: 0; z-index: 2;
+    background: linear-gradient(to bottom,
+      rgba(16,20,21,0.3) 0%,
+      rgba(16,20,21,0.1) 40%,
+      rgba(16,20,21,0.85) 85%,
+      #101415 100%);
+  }
+  /* Teal ambient glow */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 1;
+    background: radial-gradient(ellipse 70% 60% at 50% 30%, rgba(45,219,222,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-img {
+    position: absolute; inset: 0; z-index: 0;
+    width: 100%; height: 100%; object-fit: cover; object-position: center;
+  }
+  .hero-content {
+    position: relative; z-index: 10;
+    max-width: 860px; margin: 0 auto; padding: 0 32px;
+    text-align: center;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    padding: 64px 80px;
+    animation: fadeUp 1.2s ease forwards;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--teal);
+    border: 1px solid rgba(45,219,222,0.3);
+    padding: 6px 16px; border-radius: 999px; margin-bottom: 32px;
+  }
+  .hero-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+  .hero-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(40px, 6vw, 72px); font-weight: 700;
+    line-height: 1.1; letter-spacing: -0.02em;
+    color: #e0e3e5; margin-bottom: 24px;
+  }
+  .hero-title em { font-style: italic; color: #9696bd; font-weight: 400; }
+  .hero-sub {
+    font-family: 'Manrope', sans-serif;
+    font-size: 17px; font-weight: 400; line-height: 1.7;
+    color: #e264f3; max-width: 520px; margin: 0 auto 40px;
+  }
+  .btn-ghost {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: #e0e3e5; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 4px; transition: all 0.3s;
+    cursor: pointer; background: none; border-left: none; border-right: none; border-top: none;
+  }
+  .btn-ghost:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  .social-chips {
+    display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 32px;
+  }
+  .social-chip {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #c6c6cd; border: 1px solid rgba(255,255,255,0.2);
+    padding: 8px 20px; border-radius: 999px;
+    text-decoration: none; transition: all 0.3s;
+  }
+  .social-chip:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* PROCESS SECTION */
+  .section-container {
+    max-width: 1200px; margin: 0 auto; padding: 120px 48px;
+  }
+  .process-grid {
+    display: grid; grid-template-columns: 5fr 7fr; gap: 64px; align-items: center;
+  }
+  .section-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--teal);
+    border: 1px solid rgba(45,219,222,0.3);
+    padding: 6px 16px; border-radius: 999px; margin-bottom: 28px;
+  }
+  .section-eyebrow-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); }
+  .process-heading {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(32px, 4vw, 48px); font-weight: 600;
+    line-height: 1.2; color: #e0e3e5; margin-bottom: 24px;
+  }
+  .process-heading em { font-style: italic; color: #909097; }
+  .process-body {
+    font-size: 15px; line-height: 1.75; color: #909097; margin-bottom: 32px;
+  }
+  /* Bento image grid */
+  .bento-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 12px; position: relative;
+  }
+  .bento-glow {
+    position: absolute; inset: -40px;
+    background: radial-gradient(ellipse, rgba(45,219,222,0.06) 0%, transparent 70%);
+    border-radius: 50%; pointer-events: none; z-index: 0;
+  }
+  .bento-col { display: flex; flex-direction: column; gap: 12px; }
+  .bento-col:nth-child(2) { margin-top: 48px; }
+  .bento-img {
+    position: relative; overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .bento-img img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.7s ease;
+    display: block;
+  }
+  .bento-img:hover img { transform: scale(1.05); }
+  .bento-img-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(16,20,21,0.7) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.4s;
+    display: flex; align-items: flex-end; padding: 16px;
+    backdrop-filter: blur(0px); transition: all 0.4s;
+  }
+  .bento-img:hover .bento-img-overlay {
+    opacity: 1; backdrop-filter: blur(4px);
+  }
+  .bento-img-label {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  .tall { aspect-ratio: 3/4; }
+  .square { aspect-ratio: 1/1; }
+
+  /* FEATURED SECTION */
+  .featured-section {
+    max-width: 1200px; margin: 0 auto; padding: 0 48px 120px;
+  }
+  .featured-header {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 24px;
+  }
+  .featured-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 36px; font-weight: 600; color: #e0e3e5;
+  }
+  .featured-title em { font-style: italic; color: #909097; }
+  .featured-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  }
+  .art-card {
+    position: relative; overflow: hidden; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.3s;
+  }
+  .art-card:hover { border-color: rgba(233,195,73,0.25); }
+  .art-card img {
+    width: 100%; aspect-ratio: 3/4; object-fit: cover;
+    transition: transform 0.7s ease; display: block;
+  }
+  .art-card:hover img { transform: scale(1.06); }
+  .art-card-info {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 24px 20px 20px;
+    background: linear-gradient(to top, rgba(16,20,21,0.95) 0%, transparent 100%);
+    transform: translateY(8px); opacity: 0;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(8px);
+  }
+  .art-card:hover .art-card-info { transform: translateY(0); opacity: 1; }
+  .art-card-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 16px; font-weight: 500; color: #e0e3e5; margin-bottom: 4px;
+  }
+  .art-card-sub {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* GALLERY PAGE */
+  .gallery-hero {
+    padding-top: 120px; padding-bottom: 60px;
+    text-align: center;
+    max-width: 800px; margin: 0 auto; padding-left: 32px; padding-right: 32px;
+  }
+  .gallery-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: clamp(36px, 5vw, 60px); font-weight: 700;
+    line-height: 1.1; letter-spacing: -0.02em; color: #e0e3e5;
+    margin-bottom: 16px;
+  }
+  .gallery-sub {
+    font-size: 15px; color: #909097; line-height: 1.7; margin-bottom: 40px;
+  }
+  /* Filter chips */
+  .filter-bar {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+    margin-bottom: 64px; padding: 0 48px;
+  }
+  .filter-chip {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #909097; border: 1px solid #45464d;
+    padding: 8px 20px; border-radius: 999px;
+    cursor: pointer; transition: all 0.3s; background: transparent;
+  }
+  .filter-chip:hover { color: var(--teal); border-color: var(--teal); }
+  .filter-chip.active { color: var(--teal); border-color: var(--teal); background: rgba(45,219,222,0.06); }
+
+  /* Masonry gallery */
+  .gallery-grid {
+    max-width: 1300px; margin: 0 auto; padding: 0 32px 120px;
+    columns: 4; column-gap: 14px;
+  }
+  .gallery-item {
+    break-inside: avoid; margin-bottom: 14px;
+    position: relative; overflow: hidden; cursor: pointer;
+    border: 1px solid rgba(255,255,255,0.05);
+    transition: border-color 0.3s, transform 0.3s;
+    display: block;
+  }
+  .gallery-item:hover { border-color: rgba(233,195,73,0.3); transform: translateY(-3px); }
+  .gallery-item img {
+    width: 100%; height: auto; object-fit: cover; display: block;
+    transition: transform 0.6s ease;
+  }
+  .gallery-item:hover img { transform: scale(1.04); }
+  .gallery-item-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(16,20,21,0.9) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.4s;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 20px 16px;
+    backdrop-filter: blur(0px); transition: all 0.4s;
+  }
+  .gallery-item:hover .gallery-item-overlay { opacity: 1; backdrop-filter: blur(3px); }
+  .gallery-item-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 15px; font-weight: 500; color: #e0e3e5; margin-bottom: 4px;
+  }
+  .gallery-item-cat {
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold);
+  }
+  /* Inquire badge */
+  .gallery-badge {
+    position: absolute; top: 12px; right: 12px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #101415; background: var(--gold);
+    padding: 4px 10px; border-radius: 999px;
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .gallery-item:hover .gallery-badge { opacity: 1; }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(11,15,16,0.95);
+    display: none; align-items: center; justify-content: center;
+    backdrop-filter: blur(20px);
+    padding: 40px;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-inner {
+    position: relative; max-width: 700px; max-height: 90vh;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+  }
+  .lightbox-close {
+    position: absolute; top: -36px; right: 0;
+    font-size: 24px; color: #909097; cursor: pointer;
+    background: none; border: none; line-height: 1;
+    transition: color 0.2s;
+  }
+  .lightbox-close:hover { color: #e0e3e5; }
+  .lightbox-img {
+    max-height: 70vh; max-width: 100%;
+    object-fit: contain; border: 1px solid rgba(255,255,255,0.08);
+  }
+  .lightbox-meta { text-align: center; }
+  .lightbox-title {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 22px; font-weight: 500; color: #e0e3e5; margin-bottom: 6px;
+  }
+  .lightbox-cat {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 16px;
+  }
+  .lightbox-nav {
+    display: flex; gap: 16px; justify-content: center;
+  }
+  .lightbox-nav button {
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #909097; border: 1px solid #45464d; padding: 8px 20px;
+    background: transparent; cursor: pointer; transition: all 0.3s;
+  }
+  .lightbox-nav button:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* FOOTER */
+  .footer {
+    background: #0b0f10;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 60px 48px;
+  }
+  .footer-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px;
+  }
+  .footer-logo {
+    font-family: 'Bodoni Moda', serif;
+    font-size: 20px; font-weight: 700; letter-spacing: 0.22em; color: #bec6e0;
+    margin-bottom: 8px;
+  }
+  .footer-copy {
+    font-size: 13px; color: #909097;
+  }
+  .footer-links { display: flex; gap: 12px; flex-wrap: wrap; }
+  .footer-link {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+    color: #909097; border: 1px solid #45464d;
+    padding: 8px 18px; text-decoration: none; transition: all 0.3s;
+  }
+  .footer-link:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* DIVIDER */
+  .section-divider {
+    border: none; border-top: 1px solid rgba(255,255,255,0.05); margin: 0;
+  }
+
+  /* Animations */
+  @keyframes glow-pulse {
+    0%, 100% { opacity: 0.03; }
+    50% { opacity: 0.07; }
+  }
+  .ambient-glow {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    animation: glow-pulse 6s ease-in-out infinite;
+  }
+
+  /* ── FONT COLOR FIXES ────────────────────────────────────────
+     Explicit colors on every text element so nothing inherits
+     a wrong/invisible colour on any device or browser.          */
+
+  /* Headings */
+  .hero-title       { color: #e0e3e5; }
+  .hero-title em    { color: #c6c6cd; }
+  .hero-sub         { color: #909097; }
+  .process-heading  { color: #e0e3e5; }
+  .process-heading em { color: #909097; }
+  .process-body     { color: #909097; }
+  .featured-title   { color: #e0e3e5; }
+  .featured-title em{ color: #909097; }
+  .gallery-title    { color: #e0e3e5; }
+  .gallery-sub      { color: #909097; }
+
+  /* Eyebrows / chips */
+  .hero-eyebrow     { color: var(--teal); }
+  .section-eyebrow  { color: var(--teal); }
+  .filter-chip      { color: #909097; }
+  .filter-chip.active, .filter-chip:hover { color: var(--teal); }
+
+  /* Cards */
+  .art-card-title     { color: #e0e3e5; }
+  .art-card-sub       { color: var(--gold); }
+  .gallery-item-title { color: #e0e3e5; }
+  .gallery-item-cat   { color: var(--gold); }
+  .bento-img-label    { color: var(--gold); }
+
+  /* Buttons */
+  .btn-gold         { color: var(--gold); }
+  .btn-ghost        { color: #e0e3e5; }
+  .social-chip      { color: #c6c6cd; }
+  .social-chip:hover{ color: var(--gold); }
+
+  /* Lightbox */
+  .lightbox-title { color: #e0e3e5; }
+  .lightbox-cat   { color: var(--gold); }
+  .lightbox-close { color: #909097; }
+  .lightbox-close:hover { color: #e0e3e5; }
+  .lightbox-nav button { color: #909097; }
+  .lightbox-nav button:hover { color: var(--gold); }
+
+  /* Footer */
+  .footer-logo  { color: #bec6e0; }
+  .footer-copy  { color: #909097; }
+  .footer-link  { color: #909097; }
+  .footer-link:hover { color: var(--gold); }
+
+  /* Nav */
+  .nav-logo           { color: #bec6e0; }
+  .nav-links a        { color: #c6c6cd; }
+  .nav-links a:hover,
+  .nav-links a.active-link { color: #e0e3e5; }
+
+  /* CTA strip inline text */
+  .cta-body-text { color: #909097; }
+
+  /* ── HAMBURGER BUTTON ─────────────────────────────────────── */
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 40px; height: 40px;
+    background: none; border: none;
+    cursor: pointer; padding: 4px;
+    flex-shrink: 0;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 22px; height: 2px;
+    background: #c6c6cd;
+    border-radius: 2px;
+    transition: transform 0.35s ease, opacity 0.25s ease;
+    transform-origin: center;
+  }
+  .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ── MOBILE DRAWER ────────────────────────────────────────── */
+  .mobile-drawer {
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    z-index: 99;
+    background: rgba(11,15,16,0.97);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.42s cubic-bezier(0.4,0,0.2,1),
+                padding 0.38s cubic-bezier(0.4,0,0.2,1);
+    padding: 0 24px;
+  }
+  .mobile-drawer.open {
+    max-height: 440px;
+    padding: 16px 24px 32px;
+  }
+  .mobile-drawer-link {
+    display: block;
+    font-family: 'Manrope', sans-serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #c6c6cd;
+    text-decoration: none;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    cursor: pointer;
+    transition: color 0.25s;
+    background: none; border-left: none; border-right: none; border-top: none;
+    width: 100%; text-align: left;
+  }
+  .mobile-drawer-link:last-of-type { border-bottom: none; }
+  .mobile-drawer-link:hover { color: #e0e3e5; }
+  .mobile-drawer-cta {
+    margin-top: 20px;
+    display: block; width: 100%; text-align: center;
+    font-family: 'Manrope', sans-serif;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); border: 1px solid var(--gold);
+    padding: 13px 24px; background: transparent;
+    cursor: pointer; transition: background 0.3s;
+    text-decoration: none;
+  }
+  .mobile-drawer-cta:hover { background: rgba(233,195,73,0.1); }
+  .mobile-drawer-socials {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px;
+  }
+  .mobile-drawer-social {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.13em; text-transform: uppercase;
+    color: #909097;
+    border: 1px solid #45464d;
+    padding: 7px 13px; border-radius: 999px;
+    text-decoration: none; transition: all 0.25s;
+  }
+  .mobile-drawer-social:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* ── TABLET (≤ 1024px) ───────────────────────────────────── */
+  @media (max-width: 1024px) {
+    .section-container  { padding: 80px 32px; }
+    .featured-section   { padding: 0 32px 80px; }
+    .gallery-grid       { columns: 3; }
+  }
+
+  /* ── MOBILE (≤ 768px) ────────────────────────────────────── */
+  @media (max-width: 768px) {
+    /* Navbar */
+    .navbar         { padding: 0 20px; height: 64px; }
+    .nav-links      { display: none; }          /* hide desktop links */
+    .navbar > .btn-gold { display: none; }      /* hide desktop inquire */
+    .nav-hamburger  { display: flex; }          /* show hamburger */
+
+    /* Hero */
+    .hero           { padding-top: 64px; }
+    .hero-content   { padding: 32px 22px 36px; width: calc(100% - 32px); }
+    .hero-title     { font-size: clamp(32px, 9vw, 52px); }
+    .hero-sub       { font-size: 15px; }
+    .social-chips   { gap: 8px; }
+    .social-chip    { padding: 7px 14px; font-size: 10px; }
+
+    /* Process */
+    .section-container  { padding: 60px 20px; }
+    .process-grid       { grid-template-columns: 1fr; gap: 40px; }
+    .bento-col:nth-child(2) { margin-top: 0; }
+
+    /* Featured */
+    .featured-section   { padding: 0 20px 60px; }
+    .featured-header    { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .featured-grid      { grid-template-columns: 1fr 1fr; gap: 10px; }
+    /* Always show card info on mobile (no hover) */
+    .art-card-info      { opacity: 1; transform: translateY(0); }
+
+    /* Gallery */
+    .gallery-hero       { padding-top: 90px; }
+    .gallery-grid       { columns: 2; column-gap: 10px; padding: 0 16px 60px; }
+    .filter-bar         { padding: 0 16px 40px; gap: 7px; }
+
+    /* Footer */
+    .footer             { padding: 40px 20px; }
+    .footer-inner       { flex-direction: column; gap: 20px; }
+    .footer-links       { gap: 8px; }
+
+    /* Lightbox */
+    .lightbox           { padding: 20px 16px; }
+    .lightbox-img       { max-height: 55vh; }
+    .lightbox-close     { top: -32px; }
+    .lightbox-nav       { flex-wrap: wrap; gap: 10px; }
+  }
+
+  /* ── SMALL MOBILE (≤ 480px) ─────────────────────────────── */
+  @media (max-width: 480px) {
+    .featured-grid  { grid-template-columns: 1fr; }
+    .gallery-grid   { columns: 1; }
+    .hero-content   { padding: 24px 16px 28px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a href="#page-home" class="nav-logo" onclick="showPage('home')">LINAYARTS</a>
+
+  <!-- Desktop links (hidden on mobile) -->
+  <div class="nav-links">
+    <a onclick="showPage('gallery')" id="nav-gallery">Gallery</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <!-- Desktop CTA (hidden on mobile via media query) -->
+  <a class="btn-gold" href="#"
+     onclick="alert('Coming soon! WhatsApp or Instagram DM for inquiries.')">Inquire</a>
+
+  <!-- Hamburger — mobile only -->
+  <button class="nav-hamburger" id="hamburger-btn"
+          aria-label="Open menu" aria-expanded="false"
+          onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+  <button class="mobile-drawer-link" onclick="showPage('home'); closeDrawer()">Home</button>
+  <button class="mobile-drawer-link" onclick="showPage('gallery'); closeDrawer()">Gallery</button>
+  <button class="mobile-drawer-link" onclick="showPage('about')">About</button>
+  <button class="mobile-drawer-link" onclick="showPage('contact')">Contact</button>
+  <a class="mobile-drawer-cta" href="#"
+     onclick="alert('WhatsApp or Instagram DM for inquiries.'); closeDrawer()">
+    Inquire
+  </a>
+  <div class="mobile-drawer-socials">
+    <a href="https://ig.me/m/webaura_iii" class="mobile-drawer-social" onclick="closeDrawer()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2">
+        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+      </svg>
+      Instagram
+    </a>
+    <a href="https://ig.me/m/webaura_iii" class="mobile-drawer-social" onclick="closeDrawer()">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2">
+        <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+      </svg>
+      WhatsApp
+    </a>
+    <a href="https://ig.me/m/webaura_iii" class="mobile-drawer-social" onclick="closeDrawer()">Pinterest</a>
+  </div>
+</div>
+
+<!-- ======================== HOME PAGE ======================== -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <header class="hero">
+    <!-- Hero background: Bismillah resin painting (Image 5) -->
+    <img class="hero-img" src="chandeliar.jpg" alt="Bismillah resin artwork">
+    <!-- Bismillah Arabic calligraphy as decorative watermark overlay -->
+    <div class="bismillah-bg">
+      <svg viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+        <!-- Stylized Bismillah Arabic calligraphy path -->
+        <text
+          x="400" y="160"
+          font-size="140"
+          text-anchor="middle"
+          font-family="serif"
+          fill="currentColor"
+          style="fill:#e9c349;"
+        >&#x628;&#x650;&#x633;&#x652;&#x645;&#x650; &#x627;&#x644;&#x644;&#x651;&#x647;&#x650; &#x627;&#x644;&#x631;&#x651;&#x62D;&#x652;&#x645;&#x65E;&#x670;&#x646;&#x650; &#x627;&#x644;&#x631;&#x651;&#x62D;&#x650;&#x64A;&#x652;&#x645;&#x650;</text>
+      </svg>
+    </div>
+    <div class="hero-overlay"></div>
+    <!-- Ambient glow -->
+    <div class="ambient-glow" style="width:600px;height:600px;top:-100px;left:50%;transform:translateX(-50%);background:radial-gradient(circle, rgba(45,219,222,0.08) 0%, transparent 70%);"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-dot"></span>
+        Resin Fine Art
+      </div>
+      <h1 class="hero-title" style="color: #118d8f; font-family:'Times New Roman', Times, serif;">
+        Artistry<br><em>in Motion</em>
+      </h1>
+      <p class="hero-sub" style="color: var(--teal); font-family:'Times New Roman', Times, serif;">
+        Immersive, multi-layered resin creations that capture the fluid elegance of nature and memory. Each bespoke piece is a silent vessel of vibrant depth and glossy stillness.
+      </p>
+      <button class="btn-ghost" onclick="showPage('gallery')">
+        View Collection
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <div class="social-chips">
+        <a href="https://ig.me/m/webaura_iii" class="social-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Instagram
+        </a>
+        <a href="https://ig.me/m/webaura_iii" class="social-chip">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+          WhatsApp
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <hr class="section-divider">
+
+  <!-- PROCESS SECTION -->
+  <section class="section-container" id="about" style="padding-top:120px;padding-bottom:120px;">
+    <div class="process-grid">
+      <!-- Text -->
+      <div>
+        <div class="section-eyebrow">
+          <span class="section-eyebrow-dot"></span>
+          The Process
+        </div>
+        <h2 class="process-heading">
+          Pouring<br><em>Depth &amp; Light</em>
+        </h2>
+        <p class="process-body">
+          Each creation begins with intention. Translucent layers of premium epoxy resin are poured over a prepared canvas embedding dried botanicals, gold leaf, and pigment. The technique demands patience, as each layer cures to reveal extraordinary depth and a glass-like finish that dances with ambient light.
+        </p>
+        <button class="btn-gold" onclick="showPage('gallery')">Discover More</button>
+      </div>
+      <!-- Bento Grid: using uploaded product images -->
+      <div class="bento-grid" style="position:relative;">
+        <div class="bento-glow"></div>
+        <div class="bento-col" style="position:relative;z-index:1;">
+          <div class="bento-img tall">
+            <img src="Calender.jpg" alt="Floral resin name plate">
+            <div class="bento-img-overlay"><span class="bento-img-label">Name Plates</span></div>
+          </div>
+          <div class="bento-img square">
+            <img src="Tray.jpg" alt="Rose petal coasters">
+            <div class="bento-img-overlay"><span class="bento-img-label">Coasters</span></div>
+          </div>
+        </div>
+        <div class="bento-col" style="position:relative;z-index:1;margin-top:48px;">
+          <div class="bento-img square">
+            <img src="Bismillah.jpg" alt="Bismillah calligraphy art">
+            <div class="bento-img-overlay"><span class="bento-img-label">Calligraphy Art</span></div>
+          </div>
+          <div class="bento-img tall">
+            <img src="Hexagonal frame.jpg" alt="Photo frame resin">
+            <div class="bento-img-overlay"><span class="bento-img-label">Photo Frames</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- FEATURED WORKS -->
+  <section class="featured-section" id="featured-section" style="padding-top:80px;">
+    <div class="featured-header">
+      <div>
+        <div class="section-eyebrow" style="margin-bottom:12px;">
+          <span class="section-eyebrow-dot"></span>
+          Selected Works
+        </div>
+        <h2 class="featured-title">Featured <em>Collection</em></h2>
+      </div>
+      <button class="btn-gold" onclick="showPage('gallery')">View All Works</button>
+    </div>
+    <div class="featured-grid">
+      <div class="art-card" onclick="openLightbox(0)">
+        <img src="Ocean.jpg" alt="Ocean wave resin disc">
+        <div class="art-card-info">
+          <div class="art-card-title">Coastal Memory</div>
+          <div class="art-card-sub">Ocean Series · Resin Disc</div>
+        </div>
+      </div>
+      <div class="art-card" onclick="openLightbox(1)">
+        <img src="Red Whit.jpg" alt="Pressed flower necklaces">
+        <div class="art-card-info">
+          <div class="art-card-title">Garden Pendant Set</div>
+          <div class="art-card-sub">Jewellery · Botanical</div>
+        </div>
+      </div>
+      <div class="art-card" onclick="openLightbox(2)">
+        <img src="Lara.jpg" alt="Wall Hanging">
+        <div class="art-card-info">
+          <div class="art-card-title">Forever Keepsake</div>
+          <div class="art-card-sub">Personalized · Wedding</div>
+        </div>
+      </div>
+      <div class="gallery-item" data-cat="jewellery" onclick="openLightbox(9)">
+      <img src="heart.jpg" alt="Black gold heart necklace set">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Noir Heart Set</div>
+        <div class="gallery-item-cat">Jewellery · Necklace &amp; Earrings</div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- CTA STRIP -->
+  <section id="contact" style="text-align:center;padding:80px 32px;">
+    <div class="section-eyebrow" style="margin:0 auto 24px;display:inline-flex;">
+      <span class="section-eyebrow-dot"></span>
+      Commission a Piece
+    </div>
+    <h2 style="font-family:'Bodoni Moda',serif;font-size:clamp(28px,4vw,48px);font-weight:600;color:#e0e3e5;margin-bottom:16px;">
+      Your Vision, <em style="font-style:italic;color:#909097;">Poured in Resin</em>
+    </h2>
+    <p style="color:#909097;font-size:15px;max-width:480px;margin:0 auto 32px;line-height:1.7;">
+      Every custom commission is a collaboration. Share your story, your colors, your memory and it becomes art.
+    </p>
+    <a class="btn-gold" href="#">Start a Conversation</a>
+  </section>
+
+</div><!-- end home page -->
+
+<!-- ======================== GALLERY PAGE ======================== -->
+<div id="page-gallery" class="page">
+  
+  <!-- Gallery Hero -->
+  <div class="gallery-hero" style="padding-top:140px;">
+    <div class="section-eyebrow" style="margin:0 auto 24px;display:inline-flex;">
+      <span class="section-eyebrow-dot"></span>
+      Art Catalog
+    </div>
+    <h1 class="gallery-title">The <em style="font-style:italic;color:#909097;">Gallery</em></h1>
+    <p class="gallery-sub">A curated collection of resin art — from botanical name plates and calligraphy paintings to jewellery and personalized keepsakes. Each piece is handcrafted with intention.</p>
+  </div>
+
+  <!-- Filter Bar -->
+  <div class="filter-bar">
+    <button class="filter-chip active" onclick="filterGallery('all', this)">All Works</button>
+    <button class="filter-chip" onclick="filterGallery('calligraphy', this)">Calligraphy</button>
+    <button class="filter-chip" onclick="filterGallery('botanical', this)">Botanical</button>
+    <button class="filter-chip" onclick="filterGallery('jewellery', this)">Jewellery</button>
+    <button class="filter-chip" onclick="filterGallery('homeDecor', this)">Home Décor</button>
+    <button class="filter-chip" onclick="filterGallery('personalized', this)">Personalized</button>
+  </div>
+
+  <!-- Masonry Grid -->
+  <div class="gallery-grid" id="gallery-grid">
+
+    <div class="gallery-item" data-cat="botanical" onclick="openLightbox(0)">
+      <img src="Calender.jpg" alt="Wedding Calender">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Lara — Floral Name Plate</div>
+        <div class="gallery-item-cat">Botanical · Personalized</div>
+      </div>
+      <div class="gallery-badge">Inquire</div>
+    </div>
+
+    <div class="gallery-item" data-cat="homeDecor" onclick="openLightbox(1)">
+      <img src="Pendants.jpg" alt="Ocean wave resin disc">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Coastal Memory</div>
+        <div class="gallery-item-cat">Home Decor · Ocean Series</div>
+      </div>
+      <div class="gallery-badge">Inquire</div>
+    </div>
+
+    <div class="gallery-item" data-cat="personalized" onclick="openLightbox(2)">
+      <img src="Red Whit.jpg" alt="Wedding calendar plate">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Forever Keepsake</div>
+        <div class="gallery-item-cat">Personalized · Wedding</div>
+      </div>
+      <div class="gallery-badge">Custom Order</div>
+    </div>
+
+    <div class="gallery-item" data-cat="calligraphy" onclick="openLightbox(3)">
+      <img src="chandeliar.jpg" alt="Bismillah calligraphy resin art">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Bismillah — Emerald &amp; Gold</div>
+        <div class="gallery-item-cat">Calligraphy · Statement Art</div>
+      </div>
+      <div class="gallery-badge">Inquire</div>
+    </div>
+
+    <div class="gallery-item" data-cat="homeDecor" onclick="openLightbox(4)">
+      <img src="Tray.jpg" alt="Rose petal resin coasters">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Crimson Bloom Coasters</div>
+        <div class="gallery-item-cat">Home Décor · Coasters</div>
+      </div>
+      <div class="gallery-badge">Inquire</div>
+    </div>
+
+    <div class="gallery-item" data-cat="jewellery" onclick="openLightbox(5)">
+      <img src="Ocean.jpg" alt="Pressed flower necklaces">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Garden Pendant Collection</div>
+        <div class="gallery-item-cat">Jewellery · Botanical</div>
+      </div>
+      <div class="gallery-badge">Shop Now</div>
+    </div>
+
+    <div class="gallery-item" data-cat="homeDecor" onclick="openLightbox(6)">
+      <img src="Bismillah.jpg" alt="Flower mobile wind chime">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Petal Wind Chime Mobile</div>
+        <div class="gallery-item-cat">Home Décor · Hanging Art</div>
+      </div>
+      <div class="gallery-badge">Inquire</div>
+    </div>
+
+    <div class="gallery-item" data-cat="homeDecor" onclick="openLightbox(7)">
+      <img src="Lara.jpg" alt="Floral resin tray">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Botanical Vanity Tray</div>
+        <div class="gallery-item-cat">Home Décor · Serving Tray</div>
+      </div>
+      <div class="gallery-badge">Inquire</div>
+    </div>
+
+    <div class="gallery-item" data-cat="personalized" onclick="openLightbox(8)">
+      <img src="Hexagonal frame.jpg" alt="Photo frame hexagon resin light">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Luminous Memory Frame</div>
+        <div class="gallery-item-cat">Personalized · Photo Gift</div>
+      </div>
+      <div class="gallery-badge">Custom Order</div>
+    </div>
+
+    <div class="gallery-item" data-cat="jewellery" onclick="openLightbox(9)">
+      <img src="heart.jpg" alt="Black gold heart necklace set">
+      <div class="gallery-item-overlay">
+        <div class="gallery-item-title">Noir Heart Set</div>
+        <div class="gallery-item-cat">Jewellery · Necklace &amp; Earrings</div>
+      </div>
+      <div class="gallery-badge">Shop Now</div>
+    </div>
+
+  </div>
+
+  <!-- Gallery CTA -->
+  <section style="text-align:center;padding:40px 32px 100px;border-top:1px solid rgba(255,255,255,0.05);">
+    <p style="color:#909097;font-size:14px;margin-bottom:20px;font-family:'Manrope',sans-serif;">Don't see what you're looking for? Every piece can be customized.</p>
+    <a class="btn-gold" href="https://ig.me/m/webaura_iii">Book a Custom Piece</a>
+  </section>
+
+</div><!-- end gallery page -->
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxOnBg(event)">
+  <div class="lightbox-inner">
+    <button class="lightbox-close" onclick="closeLightbox()">✕</button>
+    <img class="lightbox-img" id="lightbox-img" src="" alt="">
+    <div class="lightbox-meta">
+      <div class="lightbox-title" id="lightbox-title"></div>
+      <div class="lightbox-cat" id="lightbox-cat"></div>
+      <div class="lightbox-nav">
+        <button onclick="lightboxNav(-1)">← Prev</button>
+        <a class="btn-gold" href="#" style="font-size:10px;padding:8px 18px;letter-spacing:0.15em;">Inquire About This Piece</a>
+        <button onclick="lightboxNav(1)">Next →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">LINAYARTS</div>
+      <div class="footer-copy">© 2026 Linayarts Resin Artistry. All Rights Reserved.
+        <p>Build by Webaura By III</p>
+      </div>
+    </div>
+    <div class="footer-links">
+      <a class="footer-link" href="https://ig.me/m/webaura_iii">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        Instagram
+      </a>
+      <a class="footer-link" href="#">Pinterest</a>
+      <a class="footer-link" href="#">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ——— MOBILE DRAWER ———
+function toggleDrawer() {
+  const drawer = document.getElementById('mobile-drawer');
+  const btn    = document.getElementById('hamburger-btn');
+  const isOpen = drawer.classList.toggle('open');
+  btn.classList.toggle('open', isOpen);
+  btn.setAttribute('aria-expanded', isOpen);
+  drawer.setAttribute('aria-hidden', !isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+}
+function closeDrawer() {
+  const drawer = document.getElementById('mobile-drawer');
+  const btn    = document.getElementById('hamburger-btn');
+  drawer.classList.remove('open');
+  btn.classList.remove('open');
+  btn.setAttribute('aria-expanded', false);
+  drawer.setAttribute('aria-hidden', true);
+  document.body.style.overflow = '';
+}
+// Close on Escape
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeDrawer();
+    closeLightbox();
+  }
+});
+// Close drawer on resize to desktop
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 768) closeDrawer();
+});
+
+// ——— GALLERY DATA ———
+const artworks = [
+  { img: document.querySelectorAll('.gallery-item img')[0]?.src, title: 'Lara — Floral Name Plate', cat: 'Botanical · Personalized' },
+  { img: document.querySelectorAll('.gallery-item img')[1]?.src, title: 'Coastal Memory', cat: 'Home Décor · Ocean Series' },
+  { img: document.querySelectorAll('.gallery-item img')[2]?.src, title: 'Forever Keepsake', cat: 'Personalized · Wedding' },
+  { img: document.querySelectorAll('.gallery-item img')[3]?.src, title: 'Bismillah — Emerald & Gold', cat: 'Calligraphy · Statement Art' },
+  { img: document.querySelectorAll('.gallery-item img')[4]?.src, title: 'Crimson Bloom Coasters', cat: 'Home Décor · Coasters' },
+  { img: document.querySelectorAll('.gallery-item img')[5]?.src, title: 'Garden Pendant Collection', cat: 'Jewellery · Botanical' },
+  { img: document.querySelectorAll('.gallery-item img')[6]?.src, title: 'Petal Wind Chime Mobile', cat: 'Home Décor · Hanging Art' },
+  { img: document.querySelectorAll('.gallery-item img')[7]?.src, title: 'Botanical Vanity Tray', cat: 'Home Décor · Serving Tray' },
+  { img: document.querySelectorAll('.gallery-item img')[8]?.src, title: 'Luminous Memory Frame', cat: 'Personalized · Photo Gift' },
+  { img: document.querySelectorAll('.gallery-item img')[9]?.src, title: 'Noir Heart Set', cat: 'Jewellery · Necklace & Earrings' },
+];
+
+let currentIdx = 0;
+
+// ——— PAGE NAV ———
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+  closeDrawer();
+}
+
+// ——— LIGHTBOX ———
+function openLightbox(idx) {
+  currentIdx = idx;
+  const lb = document.getElementById('lightbox');
+  // Get image srcs from gallery items
+  const imgs = document.querySelectorAll('.gallery-item img');
+  const titles = document.querySelectorAll('.gallery-item-title');
+  const cats = document.querySelectorAll('.gallery-item-cat');
+  document.getElementById('lightbox-img').src = imgs[idx].src;
+  document.getElementById('lightbox-title').textContent = titles[idx].textContent;
+  document.getElementById('lightbox-cat').textContent = cats[idx].textContent;
+  lb.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeLightboxOnBg(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+function lightboxNav(dir) {
+  const imgs = document.querySelectorAll('.gallery-item img');
+  const titles = document.querySelectorAll('.gallery-item-title');
+  const cats = document.querySelectorAll('.gallery-item-cat');
+  currentIdx = (currentIdx + dir + imgs.length) % imgs.length;
+  document.getElementById('lightbox-img').src = imgs[currentIdx].src;
+  document.getElementById('lightbox-title').textContent = titles[currentIdx].textContent;
+  document.getElementById('lightbox-cat').textContent = cats[currentIdx].textContent;
+}
+
+// ——— GALLERY FILTER ———
+function filterGallery(cat, btn) {
+  // Update active chip
+  document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  // Show/hide items
+  document.querySelectorAll('.gallery-item').forEach(item => {
+    if (cat === 'all' || item.dataset.cat === cat) {
+      item.style.display = 'block';
+    } else {
+      item.style.display = 'none';
+    }
+  });
+}
+
+// Keyboard nav for lightbox
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('lightbox').classList.contains('open')) return;
+  if (e.key === 'ArrowLeft') lightboxNav(-1);
+  if (e.key === 'ArrowRight') lightboxNav(1);
+});
+</script>
+</body>
+</html>
